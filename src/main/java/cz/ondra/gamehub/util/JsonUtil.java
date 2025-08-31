@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 
 public class JsonUtil {
 
-    private static Gson gson = new Gson();
+    private static final Gson gson = new Gson();
 
     public static JsonObject convertToJsonObject(Object object) {
         JsonElement je = gson.toJsonTree(object);

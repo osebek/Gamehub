@@ -14,8 +14,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public interface DashboardApi {
 
     @GetMapping("/open-games")
-    public List<OpenSessionDto> findOpenGames();
+    List<OpenSessionDto> findOpenGames();
 
     @GetMapping("/stats")
-    public GameStatsDto getFinishedGamesStats();
+    GameStatsDto getFinishedGamesStats();
 }

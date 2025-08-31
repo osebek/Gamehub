@@ -27,6 +27,6 @@ public interface GameApi {
     @PostMapping
     GameSessionStateDto initializeGame(@RequestBody @Validated GameInitRequestDto initRequestDto);
 
-    @PostMapping("{sessionId}/nextturn")
+    @PostMapping("{sessionId}/next-turn")
     GameSessionStateDto nextTurn(@PathVariable UUID sessionId, @RequestBody JsonObject input);
 }

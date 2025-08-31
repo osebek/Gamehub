@@ -11,7 +11,7 @@ import cz.ondra.gamehub.util.AuditorAwareImpl;
 
 @Configuration
 @EnableJpaAuditing
-public class PersitenceConfig {
+public class PersistenceConfig {
 
     @Bean
     public AuditorAware<UUID> auditorProvider() {

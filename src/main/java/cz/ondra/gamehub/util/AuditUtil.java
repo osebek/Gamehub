@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class AuditUtil {
 
-    private static AuditorAware<UUID> auditorAware = new AuditorAwareImpl();
+    private static final AuditorAware<UUID> auditorAware = new AuditorAwareImpl();
 
     public static Optional<UUID> getCurrentAuditor() {
         return auditorAware.getCurrentAuditor();
