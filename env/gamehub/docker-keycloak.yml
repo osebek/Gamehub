@@ -7,10 +7,7 @@ services:
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: password
+      KEYCLOAK_IMPORT: /opt/keycloak/data/import/gamehub.json
     volumes:
-      - keycloak_data:/opt/keycloak/data
-    command:
-      - 'start-dev'
-
-volumes:
-  keycloak_data:
+      - ./config/gamehub.json:/opt/keycloak/data/import/gamehub.json
+    entrypoint: ["/opt/keycloak/bin/kc.sh", "start-dev", "--import-realm"]
