@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: Gamehub
+  jpa:
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://localhost:54322/gamehub?currentSchema=gamehub
+    username: postgres
+    password: postgres
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/gamehub
+  spring:
+    http:
+      converters:
+        preferred-json-mapper: gson
+
+server:
+  port: 9094
+  servlet:
+    context-path: /api/gamehub
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
