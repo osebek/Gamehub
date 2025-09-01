@@ -1,26 +1,23 @@
-package cz.ondra.gamehub.service;
+package cz.ondra.gamehub.service.executor;
 
 import org.mockito.Answers;
 import org.mockito.Mockito;
 
 import java.util.UUID;
 
-import cz.ondra.gamehub.db.entity.GameInfo;
 import cz.ondra.gamehub.model.CurrentState;
 import cz.ondra.gamehub.model.Game;
 import cz.ondra.gamehub.model.GameConfiguration;
-import cz.ondra.gamehub.model.GameDifficulty;
-import cz.ondra.gamehub.model.GameInitRequest;
 import cz.ondra.gamehub.model.InitializationOutput;
 import cz.ondra.gamehub.model.PlayerInput;
 import cz.ondra.gamehub.model.Status;
-import cz.ondra.gamehub.testmodel.TestCurrentState;
-import cz.ondra.gamehub.testmodel.TestGameConfiguration;
-import cz.ondra.gamehub.testmodel.TestPlayerInput;
+import cz.ondra.gamehub.testdata.model.TestCurrentState;
+import cz.ondra.gamehub.testdata.model.TestGameConfiguration;
+import cz.ondra.gamehub.testdata.model.TestPlayerInput;
 
 import static org.mockito.Mockito.when;
 
-public class TestDataFactory {
+public class ExecutorMockFactory {
 
     public static UUID testGameId = UUID.randomUUID();
     public static String testGameName = "test game name";
@@ -31,19 +28,6 @@ public class TestDataFactory {
     public static CurrentState afterPlayerTurnCurrentState = new TestCurrentState();
     public static CurrentState afterComputerTurnCurrentState = new TestCurrentState();
     public static Status afterTurnStatus = Status.WON;
-
-    public static GameInfo prepareGameInfo() {
-        GameInfo info = new GameInfo();
-        info.setId(UUID.randomUUID());
-        return info;
-    }
-
-    public static GameInitRequest prepareInitRequest(UUID gameId, GameDifficulty difficulty) {
-        GameInitRequest initRequest = new GameInitRequest();
-        initRequest.setGameId(gameId);
-        initRequest.setDifficulty(difficulty);
-        return initRequest;
-    }
 
     public static GameExecutor prepareGameExecutorMock() {
         GameExecutor mockGameExecutor = Mockito.mock(GameExecutor.class, Answers.CALLS_REAL_METHODS);

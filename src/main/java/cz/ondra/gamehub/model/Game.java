@@ -3,7 +3,7 @@ package cz.ondra.gamehub.model;
 import java.util.Set;
 import java.util.UUID;
 
-import cz.ondra.gamehub.service.GameExecutor;
+import cz.ondra.gamehub.service.executor.GameExecutor;
 
 public interface Game {
 

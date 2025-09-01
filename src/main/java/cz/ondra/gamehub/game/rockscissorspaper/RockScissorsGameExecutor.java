@@ -6,7 +6,7 @@ import cz.ondra.gamehub.model.GameConfiguration;
 import cz.ondra.gamehub.model.GameDifficulty;
 import cz.ondra.gamehub.model.InitializationOutput;
 import cz.ondra.gamehub.model.Status;
-import cz.ondra.gamehub.service.GameExecutor;
+import cz.ondra.gamehub.service.executor.GameExecutor;
 
 public class RockScissorsGameExecutor extends GameExecutor<RockScissorsPaperConfiguration, RockScissorsPaperInput, RockScissorsPaperState> {
 

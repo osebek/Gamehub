@@ -13,6 +13,7 @@ import cz.ondra.gamehub.db.entity.GameSession;
 import cz.ondra.gamehub.db.repository.GameSessionRepository;
 import cz.ondra.gamehub.exception.AuditorNotFoundException;
 import cz.ondra.gamehub.exception.GamehubException;
+import cz.ondra.gamehub.service.executor.GameExecutor;
 import cz.ondra.gamehub.model.CurrentState;
 import cz.ondra.gamehub.model.DataInput;
 import cz.ondra.gamehub.model.DataOutput;
@@ -38,6 +39,7 @@ public class GameService {
 
     private final GameInfoService gameInfoService;
 
+    @Transactional
     public void registerGame(Game game) {
         gameRegister.put(game.getGameId(), game);
         GameInfo info = GameInfo.forGame(game);

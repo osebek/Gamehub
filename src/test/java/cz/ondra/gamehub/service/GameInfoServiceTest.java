@@ -16,6 +16,7 @@ import java.util.Optional;
 import cz.ondra.gamehub.db.entity.GameInfo;
 import cz.ondra.gamehub.db.repository.GameInfoRepository;
 import cz.ondra.gamehub.exception.GamehubException;
+import cz.ondra.gamehub.testdata.factory.UnitTestDataFactory;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.when;
@@ -31,7 +32,7 @@ public class GameInfoServiceTest {
 
     @Test
     void createGameInfo_returnsResult() {
-        GameInfo info = TestDataFactory.prepareGameInfo();
+        GameInfo info = UnitTestDataFactory.prepareGameInfo();
         when(gameInfoRepository.save(info)).thenReturn(info);
 
         GameInfo createdInfo = gameInfoService.createGameInfo(info);
@@ -41,7 +42,7 @@ public class GameInfoServiceTest {
 
     @Test
     void getById_returnsResult() {
-        GameInfo info = TestDataFactory.prepareGameInfo();
+        GameInfo info = UnitTestDataFactory.prepareGameInfo();
         when(gameInfoRepository.findById(info.getId())).thenReturn(Optional.of(info));
 
         GameInfo foundInfo = gameInfoService.getById(info.getId());
@@ -51,7 +52,7 @@ public class GameInfoServiceTest {
 
     @Test
     void getById_throwsExceptionWhenNotFound() {
-        GameInfo info = TestDataFactory.prepareGameInfo();
+        GameInfo info = UnitTestDataFactory.prepareGameInfo();
         when(gameInfoRepository.findById(info.getId())).thenReturn(Optional.empty());
 
         Exception ex = Assertions.assertThrows(GamehubException.class, () -> gameInfoService.getById(info.getId()));
@@ -60,8 +61,8 @@ public class GameInfoServiceTest {
 
     @Test
     void getAvailableGames_returnsResult() {
-        GameInfo info1 = TestDataFactory.prepareGameInfo();
-        GameInfo info2 = TestDataFactory.prepareGameInfo();
+        GameInfo info1 = UnitTestDataFactory.prepareGameInfo();
+        GameInfo info2 = UnitTestDataFactory.prepareGameInfo();
         List<GameInfo> storedInfos = List.of(info1, info2);
         when(gameInfoRepository.findAll()).thenReturn(storedInfos);
 

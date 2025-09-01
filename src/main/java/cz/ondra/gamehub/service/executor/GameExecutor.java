@@ -1,4 +1,4 @@
-package cz.ondra.gamehub.service;
+package cz.ondra.gamehub.service.executor;
 
 import cz.ondra.gamehub.model.CurrentState;
 import cz.ondra.gamehub.model.DataOutput;
@@ -35,5 +35,5 @@ public abstract class GameExecutor<R extends GameConfiguration, S extends Player
 
     protected abstract Status evaluateAfterTurn(T currentState);
 
-    protected abstract InitializationOutput configureNewGame(GameDifficulty gameDifficulty);
+    public abstract InitializationOutput configureNewGame(GameDifficulty gameDifficulty);
 }

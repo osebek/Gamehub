@@ -33,9 +33,12 @@ import cz.ondra.gamehub.model.GameInitRequest;
 import cz.ondra.gamehub.model.GameSessionState;
 import cz.ondra.gamehub.model.PlayerInput;
 import cz.ondra.gamehub.model.Status;
-import cz.ondra.gamehub.testmodel.TestCurrentState;
-import cz.ondra.gamehub.testmodel.TestGameConfiguration;
-import cz.ondra.gamehub.testmodel.TestPlayerInput;
+import cz.ondra.gamehub.service.executor.ExecutorMockFactory;
+import cz.ondra.gamehub.service.executor.GameExecutor;
+import cz.ondra.gamehub.testdata.factory.UnitTestDataFactory;
+import cz.ondra.gamehub.testdata.model.TestCurrentState;
+import cz.ondra.gamehub.testdata.model.TestGameConfiguration;
+import cz.ondra.gamehub.testdata.model.TestPlayerInput;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -63,7 +66,7 @@ class GameServiceTest {
 
     @Test
     void registerGame() {
-        Game mockGame = TestDataFactory.prepareGameMock(null);
+        Game mockGame = ExecutorMockFactory.prepareGameMock(null);
         GameInfo info = GameInfo.forGame(mockGame);
 
         gameService.registerGame(mockGame);
@@ -73,19 +76,19 @@ class GameServiceTest {
 
     @Test
     void initializeGame_throwsException_whenGameNotFoundInRegister() {
-        Game mockGame = TestDataFactory.prepareGameMock(null);
+        Game mockGame = ExecutorMockFactory.prepareGameMock(null);
 
         gameService.registerGame(mockGame);
 
-        GameInitRequest initRequest = TestDataFactory.prepareInitRequest(UUID.randomUUID(), GameDifficulty.NORMAL);
+        GameInitRequest initRequest = UnitTestDataFactory.prepareInitRequest(UUID.randomUUID(), GameDifficulty.NORMAL);
         Exception ex = Assertions.assertThrows(GamehubException.class, () -> gameService.initializeGame(initRequest));
         Assertions.assertEquals("Game not found for specified id", ex.getMessage());
     }
 
     @Test
     void initializeGame_returnsValidOutput() {
-        GameExecutor mockGameExecutor = TestDataFactory.prepareGameExecutorMock();
-        Game mockGame = TestDataFactory.prepareGameMock(mockGameExecutor);
+        GameExecutor mockGameExecutor = ExecutorMockFactory.prepareGameExecutorMock();
+        Game mockGame = ExecutorMockFactory.prepareGameMock(mockGameExecutor);
 
         GameDifficulty difficulty = GameDifficulty.NORMAL;
         GameInfo info = GameInfo.forGame(mockGame);
@@ -97,7 +100,7 @@ class GameServiceTest {
 
         gameService.registerGame(mockGame);
 
-        GameInitRequest initRequest = TestDataFactory.prepareInitRequest(mockGame.getGameId(), difficulty);
+        GameInitRequest initRequest = UnitTestDataFactory.prepareInitRequest(mockGame.getGameId(), difficulty);
 
         GameSessionState sessionState = gameService.initializeGame(initRequest);
 
@@ -109,10 +112,10 @@ class GameServiceTest {
         Assertions.assertEquals(mockGame.getDescription(), sessionState.getDescription());
 
         CurrentState actualState = sessionState.getCurrentState();
-        Assertions.assertTrue(new ReflectionEquals(TestDataFactory.afterInitCurrentState).matches(actualState));
+        Assertions.assertTrue(new ReflectionEquals(ExecutorMockFactory.afterInitCurrentState).matches(actualState));
 
         PlayerInput actualInput = sessionState.getExamplePlayerInput();
-        Assertions.assertTrue(new ReflectionEquals(TestDataFactory.afterInitExampleInput).matches(actualInput));
+        Assertions.assertTrue(new ReflectionEquals(ExecutorMockFactory.afterInitExampleInput).matches(actualInput));
     }
 
     @Test
@@ -139,8 +142,8 @@ class GameServiceTest {
 
     @Test
     void processGameTurn_returnsValidOutput() {
-        GameExecutor mockGameExecutor = TestDataFactory.prepareGameExecutorMock();
-        Game mockGame = TestDataFactory.prepareGameMock(mockGameExecutor);
+        GameExecutor mockGameExecutor = ExecutorMockFactory.prepareGameExecutorMock();
+        Game mockGame = ExecutorMockFactory.prepareGameMock(mockGameExecutor);
 
         GameDifficulty difficulty = GameDifficulty.NORMAL;
         GameInfo info = GameInfo.forGame(mockGame);
@@ -157,14 +160,14 @@ class GameServiceTest {
         verify(gameSessionRepository).save(session);
 
         Assertions.assertEquals(session.getId(), sessionState.getGameSessionId());
-        Assertions.assertEquals(TestDataFactory.afterTurnStatus, sessionState.getStatus());
+        Assertions.assertEquals(ExecutorMockFactory.afterTurnStatus, sessionState.getStatus());
         Assertions.assertEquals(mockGame.getDescription(), sessionState.getDescription());
 
         CurrentState actualState = sessionState.getCurrentState();
-        Assertions.assertTrue(new ReflectionEquals(TestDataFactory.afterComputerTurnCurrentState).matches(actualState));
+        Assertions.assertTrue(new ReflectionEquals(ExecutorMockFactory.afterComputerTurnCurrentState).matches(actualState));
 
         PlayerInput actualInput = sessionState.getExamplePlayerInput();
-        Assertions.assertTrue(new ReflectionEquals(TestDataFactory.afterInitExampleInput).matches(actualInput));
+        Assertions.assertTrue(new ReflectionEquals(ExecutorMockFactory.afterInitExampleInput).matches(actualInput));
     }
 
     private void setupAuthentication() {

@@ -1,4 +1,4 @@
-package cz.ondra.gamehub.testmodel;
+package cz.ondra.gamehub.testdata.model;
 
 import cz.ondra.gamehub.model.GameConfiguration;
 

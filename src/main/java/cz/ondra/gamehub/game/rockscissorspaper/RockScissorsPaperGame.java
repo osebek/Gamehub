@@ -7,12 +7,11 @@ import java.util.UUID;
 import cz.ondra.gamehub.model.Game;
 import cz.ondra.gamehub.model.GameDifficulty;
 import cz.ondra.gamehub.model.PlayerInput;
-import cz.ondra.gamehub.service.GameExecutor;
+import cz.ondra.gamehub.service.executor.GameExecutor;
 import lombok.Getter;
 
 @Getter
 public class RockScissorsPaperGame implements Game {
-
     private static final PlayerInput exampleInput = RockScissorsPaperInput.buildExamplePlayerInput();
 
     private final UUID gameId = UUID.fromString("ca6f1c51-5c1f-4e28-a7b5-00a0e260019e");
