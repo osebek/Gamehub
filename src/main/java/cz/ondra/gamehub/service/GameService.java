@@ -39,7 +39,6 @@ public class GameService {
 
     private final GameInfoService gameInfoService;
 
-    @Transactional
     public void registerGame(Game game) {
         gameRegister.put(game.getGameId(), game);
         GameInfo info = GameInfo.forGame(game);
@@ -54,6 +53,10 @@ public class GameService {
         }
 
         GameInfo info = gameInfoService.getById(game.getGameId());
+
+        if (!info.getDifficultyLevels().contains(request.getDifficulty())) {
+            throw new GamehubException("Selected difficulty is not supported for this game");
+        }
 
         GameSession gameSession = GameSession.forGameAndDifficulty(info, request.getDifficulty());
 
