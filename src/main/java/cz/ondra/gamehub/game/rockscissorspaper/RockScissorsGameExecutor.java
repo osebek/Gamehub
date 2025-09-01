@@ -1,5 +1,6 @@
 package cz.ondra.gamehub.game.rockscissorspaper;
 
+import cz.ondra.gamehub.exception.GamehubException;
 import cz.ondra.gamehub.exception.PlayerInputValidationException;
 import cz.ondra.gamehub.model.CurrentState;
 import cz.ondra.gamehub.model.GameConfiguration;
@@ -57,6 +58,7 @@ public class RockScissorsGameExecutor extends GameExecutor<RockScissorsPaperConf
         NextMoveCalculatorStrategy strategy = switch(difficulty) {
             case NORMAL -> NextMoveCalculatorStrategy.RANDOM;
             case GOD -> NextMoveCalculatorStrategy.FORESEE;
+            default -> throw new GamehubException("Selected difficulty is not supported for this game");
         };
 
         GameConfiguration config = new RockScissorsPaperConfiguration(strategy);

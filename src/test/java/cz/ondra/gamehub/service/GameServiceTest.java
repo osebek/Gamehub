@@ -97,6 +97,7 @@ class GameServiceTest {
 
         when(gameInfoService.createGameInfo(Mockito.any())).thenReturn(info);
         when(gameSessionRepository.save(Mockito.any())).thenReturn(session);
+        when(gameInfoService.getById(Mockito.any())).thenReturn(info);
 
         gameService.registerGame(mockGame);
 

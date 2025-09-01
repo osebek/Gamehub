@@ -17,7 +17,7 @@ public class RockScissorsPaperGame implements Game {
     private final UUID gameId = UUID.fromString("ca6f1c51-5c1f-4e28-a7b5-00a0e260019e");
     private final String name = "Kamen nuzky papir";
     private final String description = "Select one of shapes: ROCK, SCISSORS, PAPER. Player winning three turns wins the game.";
-    private final Set<GameDifficulty> difficultyLevels = EnumSet.allOf(GameDifficulty.class);
+    private final Set<GameDifficulty> difficultyLevels = EnumSet.of(GameDifficulty.NORMAL, GameDifficulty.GOD);
     private final GameExecutor<?,?,?> gameExecutor = new RockScissorsGameExecutor();
 
     @Override

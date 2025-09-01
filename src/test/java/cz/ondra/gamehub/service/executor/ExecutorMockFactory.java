@@ -3,11 +3,13 @@ package cz.ondra.gamehub.service.executor;
 import org.mockito.Answers;
 import org.mockito.Mockito;
 
+import java.util.EnumSet;
 import java.util.UUID;
 
 import cz.ondra.gamehub.model.CurrentState;
 import cz.ondra.gamehub.model.Game;
 import cz.ondra.gamehub.model.GameConfiguration;
+import cz.ondra.gamehub.model.GameDifficulty;
 import cz.ondra.gamehub.model.InitializationOutput;
 import cz.ondra.gamehub.model.PlayerInput;
 import cz.ondra.gamehub.model.Status;
@@ -46,6 +48,7 @@ public class ExecutorMockFactory {
         when(mockGame.getGameId()).thenReturn(testGameId);
         when(mockGame.getName()).thenReturn(testGameName);
         when(mockGame.getDescription()).thenReturn(testGameDescription);
+        when(mockGame.getDifficultyLevels()).thenReturn(EnumSet.allOf(GameDifficulty.class));
         when(mockGame.getExamplePlayerInput()).thenReturn(afterInitExampleInput);
         when(mockGame.getGameExecutor()).thenReturn(mockGameExecutor);
         return mockGame;

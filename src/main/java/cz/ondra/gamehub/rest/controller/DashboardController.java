@@ -2,12 +2,12 @@ package cz.ondra.gamehub.rest.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import cz.ondra.gamehub.db.entity.GameInfo;
 import cz.ondra.gamehub.db.entity.GameSession;
 import cz.ondra.gamehub.model.GameDifficulty;
 import cz.ondra.gamehub.model.Status;
@@ -43,14 +43,15 @@ public class DashboardController implements DashboardApi {
     }
 
     private Map<GameDifficulty,SingleGameStatsDto> collectGameStats(List<GameSession> sessions) {
+        GameInfo info = sessions.getFirst().getGameInfo();
         Map<GameDifficulty,SingleGameStatsDto> map = new HashMap<>();
         Map<GameDifficulty,List<GameSession>> mapByDifficulty = sessions.stream()
             .collect(Collectors.groupingBy(GameSession::getDifficulty));
-        Arrays.stream(GameDifficulty.values()).forEach(d -> map.put(d, collectSingleGameStats(mapByDifficulty.get(d))));
+        info.getDifficultyLevels().forEach(d -> map.put(d, collectGameStatsForDifficulty(mapByDifficulty.get(d))));
         return map;
     }
 
-    private SingleGameStatsDto collectSingleGameStats(List<GameSession> sessions) {
+    private SingleGameStatsDto collectGameStatsForDifficulty(List<GameSession> sessions) {
         SingleGameStatsDto sgsDto = new SingleGameStatsDto();
         if (sessions == null) {
             return sgsDto;
