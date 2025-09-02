@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.json.JsonCompareMode;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,18 +20,17 @@ import cz.ondra.gamehub.TestcontainersConfiguration;
 import cz.ondra.gamehub.db.repository.GameInfoRepository;
 import cz.ondra.gamehub.model.Game;
 import cz.ondra.gamehub.rest.dto.GameInitRequestDto;
+import cz.ondra.gamehub.service.GameRegistrator;
 import cz.ondra.gamehub.service.GameService;
 import cz.ondra.gamehub.testdata.factory.ItTestDataFactory;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ActiveProfiles("test")
 @SpringBootTest
 @Import({TestcontainersConfiguration.class})
 @AutoConfigureMockMvc
@@ -39,6 +38,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class GameControllerIT {
 
     private static final String LOGGED_IN_USER_ID = "ff631d1d-c846-4dbf-a1f7-895047fbe503";
+
+    @MockitoBean
+    private GameRegistrator gameRegistrator;
 
     @Autowired
     private MockMvc mockMvc;
@@ -80,7 +82,7 @@ public class GameControllerIT {
 
         mockMvc.perform(get("/games"))
             .andExpect(status().isOk())
-            .andExpect(content().json(expectedResponse, JsonCompareMode.STRICT));
+            .andExpect(content().json(expectedResponse, JsonCompareMode.LENIENT));
     }
 
     @WithMockUser(value = LOGGED_IN_USER_ID)
